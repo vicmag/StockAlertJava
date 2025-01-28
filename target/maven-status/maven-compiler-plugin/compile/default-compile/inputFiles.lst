@@ -1,0 +1,3 @@
+/workspaces/StockAlertJava/src/main/java/com/store/domain/service/LowStockAlertService.java
+/workspaces/StockAlertJava/src/main/java/com/store/domain/repository/ProductRepository.java
+/workspaces/StockAlertJava/src/main/java/com/store/domain/model/Product.java
