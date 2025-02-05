@@ -12,7 +12,12 @@ public class LowStockAlertService {
     }
 
     public boolean checkLowStock(String productId) {
-        // Not implemented yet (Red Phase)
-        throw new UnsupportedOperationException("Not implemented yet");
+        Optional<Product> productOptional = productRepository.findById(productId);
+        if (productOptional.isPresent()){
+            Product product = productOptional.get();
+            return product.getCurrentStock() <= product.getLowStockThreshold();
+        }
+        return false;
     }
+
 }
