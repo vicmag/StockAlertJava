@@ -1,9 +1,9 @@
-// Product.java (Modelo de Dominio)
+// Product.java (Modelo de Dominio - Actualizado)
 package com.store.domain.model;
 
 public class Product {
-    private String name;
-    private int stock;
+    private final String name;
+    private int stock; // Stock ahora es mutable
     private int minimumStockLevel;
 
     public Product(String name, int stock) {
@@ -17,6 +17,10 @@ public class Product {
 
     public int getStock() {
         return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
     public int getMinimumStockLevel() {

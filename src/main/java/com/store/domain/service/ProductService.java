@@ -1,20 +1,27 @@
-// ProductService.java (Servicio de Dominio - Refactorizado)
+// ProductService.java (Servicio de Dominio - Actualizado)
 package com.store.domain.service;
 
 import com.store.domain.model.Product;
 import com.store.domain.port.ProductRepository;
+import com.store.domain.port.AlertNotifier;
 
 public class ProductService {
     private final ProductRepository productRepository;
+    private final AlertNotifier alertNotifier;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, AlertNotifier alertNotifier) {
         this.productRepository = productRepository;
+        this.alertNotifier = alertNotifier;
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel) {
         validateMinimumStockLevel(minimumStockLevel);
         product.setMinimumStockLevel(minimumStockLevel);
         productRepository.save(product);
+    }
+
+    public void checkStockLevel(Product product) {
+        // Implementación pendiente (Fase Red de TDD)
     }
 
     private void validateMinimumStockLevel(int minimumStockLevel) {
