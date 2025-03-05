@@ -60,4 +60,21 @@ class ProductServiceTest {
         // Assert
         verify(alertNotifier).notifyLowStock(product);
     }
+
+    @Test
+    void whenStockIsAboveMinimumLevel_thenNoAlertIsTriggered() {
+        // Arrange
+        ProductRepository productRepository = mock(ProductRepository.class);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository, alertNotifier);
+        Product product = new Product("Camiseta Azul", 20);
+        product.setMinimumStockLevel(10); // Nivel mínimo configurado
+
+        // Act
+        product.setStock(15); // Stock por encima del nivel mínimo
+        productService.checkStockLevel(product);
+
+        // Assert
+        verify(alertNotifier, never()).notifyLowStock(product);
+    }
 }
