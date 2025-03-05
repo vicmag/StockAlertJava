@@ -1,3 +1,3 @@
-/workspaces/StockAlertJava/src/main/java/com/store/domain/service/LowStockAlertService.java
-/workspaces/StockAlertJava/src/main/java/com/store/domain/repository/ProductRepository.java
-/workspaces/StockAlertJava/src/main/java/com/store/domain/model/Product.java
+/workspaces/tdd_java/src/main/java/com/store/domain/service/ProductService.java
+/workspaces/tdd_java/src/main/java/com/store/domain/port/ProductRepository.java
+/workspaces/tdd_java/src/main/java/com/store/domain/model/Product.java

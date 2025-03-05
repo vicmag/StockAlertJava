@@ -1,27 +1,29 @@
+// Product.java (Modelo de Dominio)
 package com.store.domain.model;
 
 public class Product {
-    private String id;
     private String name;
-    private int currentStock;
-    private int lowStockThreshold;
+    private int stock;
+    private int minimumStockLevel;
 
-    public Product(String id, String name, int currentStock, int lowStockThreshold) {
-        this.id = id;
+    public Product(String name, int stock) {
         this.name = name;
-        this.currentStock = currentStock;
-        this.lowStockThreshold = lowStockThreshold;
+        this.stock = stock;
     }
 
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public int getCurrentStock() {
-        return currentStock;
+    public int getStock() {
+        return stock;
     }
 
-    public int getLowStockThreshold() {
-        return lowStockThreshold;
+    public int getMinimumStockLevel() {
+        return minimumStockLevel;
+    }
+
+    public void setMinimumStockLevel(int minimumStockLevel) {
+        this.minimumStockLevel = minimumStockLevel;
     }
 }
