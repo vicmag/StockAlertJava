@@ -1,4 +1,4 @@
-// ProductService.java (Servicio de Dominio)
+// ProductService.java (Servicio de Dominio - Refactorizado)
 package com.store.domain.service;
 
 import com.store.domain.model.Product;
@@ -12,15 +12,14 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel) {
-        // Validar que el nivel mínimo sea mayor que cero
+        validateMinimumStockLevel(minimumStockLevel);
+        product.setMinimumStockLevel(minimumStockLevel);
+        productRepository.save(product);
+    }
+
+    private void validateMinimumStockLevel(int minimumStockLevel) {
         if (minimumStockLevel <= 0) {
             throw new IllegalArgumentException("El nivel mínimo de stock debe ser mayor que cero.");
         }
-
-        // Establecer el nivel mínimo de stock
-        product.setMinimumStockLevel(minimumStockLevel);
-
-        // Guardar el producto actualizado en el repositorio
-        productRepository.save(product);
     }
 }
