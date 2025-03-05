@@ -12,6 +12,15 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel) {
-        // Implementación pendiente (Fase Red de TDD)
+        // Validar que el nivel mínimo sea mayor que cero
+        if (minimumStockLevel <= 0) {
+            throw new IllegalArgumentException("El nivel mínimo de stock debe ser mayor que cero.");
+        }
+
+        // Establecer el nivel mínimo de stock
+        product.setMinimumStockLevel(minimumStockLevel);
+
+        // Guardar el producto actualizado en el repositorio
+        productRepository.save(product);
     }
 }
