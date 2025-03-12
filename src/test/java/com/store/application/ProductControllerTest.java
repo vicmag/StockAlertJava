@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -48,5 +50,23 @@ class ProductControllerTest {
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         verify(productService).checkStockLevel(any(Product.class));
+    }
+
+    @Test
+    void whenProductDoesNotExist_thenReturnNotFound() {
+        // Arrange
+        String productId = "999"; // ID de un producto que no existe
+        int minimumStockLevel = 10;
+
+        // Simular una excepción cuando el producto no existe
+        doThrow(new IllegalArgumentException("Producto no encontrado"))
+            .when(productService)
+            .setMinimumStockLevel(any(Product.class), eq(minimumStockLevel));
+
+        // Act
+        ResponseEntity response = productController.setMinimumStockLevel(productId, minimumStockLevel);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
