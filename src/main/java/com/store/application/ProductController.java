@@ -1,4 +1,4 @@
-// ProductController.java (Refactorizado)
+// ProductController.java (Controlador REST - Fase Refactor)
 package com.store.application;
 
 import com.store.domain.model.Product;
@@ -22,11 +22,11 @@ public class ProductController {
             @PathVariable String id,
             @RequestParam int minimumStockLevel) {
         try {
-            Product product = new Product(id, 0); // Simulación de un producto existente
+            Product product = getProductById(id); // Extracción de lógica repetitiva
             productService.setMinimumStockLevel(product, minimumStockLevel);
             return ResponseEntity.status(HttpStatus.OK).build();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return handleProductNotFound(); // Manejo de excepciones encapsulado
         }
     }
 
@@ -39,5 +39,9 @@ public class ProductController {
 
     private Product getProductById(String id) {
         return new Product(id, 0); // Simulación de un producto existente
+    }
+
+    private ResponseEntity handleProductNotFound() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
