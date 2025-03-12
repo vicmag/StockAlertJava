@@ -21,9 +21,13 @@ public class ProductController {
     public ResponseEntity setMinimumStockLevel(
             @PathVariable String id,
             @RequestParam int minimumStockLevel) {
-        Product product = getProductById(id); // Extracción de lógica repetitiva
-        productService.setMinimumStockLevel(product, minimumStockLevel);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        try {
+            Product product = new Product(id, 0); // Simulación de un producto existente
+            productService.setMinimumStockLevel(product, minimumStockLevel);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @PostMapping("/{id}/check-stock")
