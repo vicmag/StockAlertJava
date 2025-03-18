@@ -13,7 +13,7 @@ class ProductServiceTest {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
         ProductService productService = new ProductService(productRepository);
-        Product product = new Product("Camiseta Azul", 20);
+        Product product = new Product("Camiseta Azul");
         int newMinimumStockLevel = 15;
 
         // Act
