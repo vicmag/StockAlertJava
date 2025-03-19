@@ -11,6 +11,10 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int newMinimumStockLevel){
+        if (newMinimumStockLevel <= 0){
+            throw new IllegalArgumentException("El nivel mínimo deber ser mayor a cero.");
+        }
+        
         product.setMinimumStockLevel(newMinimumStockLevel);
 
         productRepository.save(product);
