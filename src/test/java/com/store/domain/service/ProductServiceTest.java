@@ -36,7 +36,7 @@ class ProductServiceTest {
         // Act & Assert
         IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class, () -> productService.setMinimumStockLevel(product, invalidMinimumStockLevel));    
-        assertEquals("El nivel mínimo debe ser mayor a cero", exception.getMessage());
+        assertEquals("El nivel mínimo debe ser mayor a cero.", exception.getMessage());
         verify(productRepository,never()).save(product);
     }
 }
