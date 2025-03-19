@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Instala Maven en la etapa final
 RUN apt-get update && \
-    apt-get install -y maven && \
+    apt-get install -y maven git && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
