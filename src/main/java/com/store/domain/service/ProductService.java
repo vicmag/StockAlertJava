@@ -11,6 +11,10 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
-        //No se implenta
+        //Establecemos el valor mínimo del stock
+        product.setMinimumStockLevel(minimumStockLevel);
+
+        //Guardo el producto en la infraestructura
+        productRepository.save(product);
     }
 }
