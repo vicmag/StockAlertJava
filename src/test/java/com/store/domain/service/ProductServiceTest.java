@@ -23,4 +23,20 @@ class ProductServiceTest {
         verify(productRepository).save(product);
         assertEquals(newMinimumStockLevel, product.getMinimumStockLevel());
     }
+
+    @Test
+    void whenSetMinimumStockLevel_equaltozero_thenError() {
+        // Arrange
+        ProductRepository productRepository = mock(ProductRepository.class);
+        ProductService productService = new ProductService(productRepository);
+        Product product = new Product("Camiseta Azul");
+        int invalidMinimumStockLevel = 0;
+
+    
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class, () -> productService.setMinimumStockLevel(product, invalidMinimumStockLevel));    
+        assertEquals("El nivel mínimo debe ser mayor a cero", exception.getMessage());
+        verify(productRepository,never()).save(product);
+    }
 }
