@@ -11,7 +11,9 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int newMinimumStockLevel){
-        //No implementado en la fase roja
+        product.setMinimumStockLevel(newMinimumStockLevel);
+
+        productRepository.save(product);
     }
     
 }
