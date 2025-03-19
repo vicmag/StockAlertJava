@@ -11,9 +11,9 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
-        if  (minimumStockLevel <= 0 ){
-            throw new IllegalArgumentException("El nivel mínimo debe ser mayor a cero.");
-        }
+        //Validamos el valor mínimo del stock
+        validateMinimumStockLevel(minimumStockLevel);
+
 
         //Establecemos el valor mínimo del stock
         product.setMinimumStockLevel(minimumStockLevel);
@@ -21,4 +21,12 @@ public class ProductService {
         //Guardo el producto en la infraestructura
         productRepository.save(product);
     }
+
+    public void validateMinimumStockLevel(int minimumStockLevel){
+        if  (minimumStockLevel <= 0 ){
+            throw new IllegalArgumentException("El nivel mínimo debe ser mayor a cero.");
+        }
+    }
+
+
 }
