@@ -2,6 +2,7 @@ package com.store.domain.service;
 
 import com.store.domain.model.Product;
 import com.store.domain.port.ProductRepository;
+import com.store.domain.port.AlertNotifier;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -48,12 +49,13 @@ class ProductServiceTest {
 
         ProductService productService = new ProductService(productRepository, alertNotifier);
 
-        Product product = new Product("Camiseta Azul");
+        Product product = new Product("Camiseta Azul", 15); //Comienzo con 15 "Camisetas Azules"
         int newMinimumStockLevel = 10;
         productService.setMinimumStockLevel(product, newMinimumStockLevel);
 
         //Act
         product.setStock(5); //Reducir el stock a un nivel menor que el mínimo que es 10
+        productService.checkStockLevel(product);
         
         //Assert
         verify(alertNotifier).notifyLowStock(product);
