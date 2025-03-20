@@ -2,6 +2,7 @@ package com.store.domain.service;
 
 import com.store.domain.model.Product;
 import com.store.domain.port.ProductRepository;
+import com.store.domain.port.AlertNotifier;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -40,5 +41,26 @@ class ProductServiceTest {
         assertEquals("El nivel mínimo deber ser mayor a cero.", exception.getMessage());
         
         verify(productRepository, never()).save(product); //nunca mando a salvar
+    }
+
+    @Test
+    void whenStockIsBelowMinimumLevel_thenAlertIsTriggered() {
+        // Arrange
+        ProductRepository productRepository = mock(ProductRepository.class);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+
+        ProductService productService = new ProductService(productRepository, alertNotifier);
+
+        Product product = new Product("Camiseta Azul");
+        int newMinimumStockLevel = 10;
+        product.setMinimumStockLevel(newMinimumStockLevel);
+
+        //Act
+        product.setStock(5); //Reducir el stock actual a 5
+        productService.checkStockLevel(product);
+
+        //Assert
+        verify(alertNotifier).notifyLowStock(product);
+
     }
 }
