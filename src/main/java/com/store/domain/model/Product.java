@@ -5,6 +5,7 @@ import lombok.Data;
 @Data //setters y getters
 public class Product {
     private String name;
+    private int stock;
     private int minimumStockLevel;
 
     public Product(String name){

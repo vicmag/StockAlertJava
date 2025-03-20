@@ -1,13 +1,21 @@
 package com.store.domain.service;
 
 import com.store.domain.model.Product;
+import com.store.domain.port.AlertNotifier;
 import com.store.domain.port.ProductRepository;
 
 public class ProductService {
     private final ProductRepository productRepository;
+    private final AlertNotifier alertNotifier;
 
     public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
+        this.alertNotifier = null;
+    }
+
+    public ProductService(ProductRepository productRepository, AlertNotifier alertNotifier){
+        this.productRepository = productRepository;
+        this.alertNotifier = alertNotifier;
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
@@ -22,6 +30,10 @@ public class ProductService {
         if (minimumStockLevel <= 0){
             throw new IllegalArgumentException("El nivel mínimo deber ser mayor a cero.");
         }
+    }
+
+    public void checkStockLevel(Product product){
+        //No implementado en la fase roja
     }
     
 }

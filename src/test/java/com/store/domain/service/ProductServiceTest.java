@@ -52,6 +52,7 @@ class ProductServiceTest {
         ProductService productService = new ProductService(productRepository, alertNotifier);
 
         Product product = new Product("Camiseta Azul");
+        product.setStock(100); //Esto es lo tengo en mi inventario
         int newMinimumStockLevel = 10;
         product.setMinimumStockLevel(newMinimumStockLevel);
 
