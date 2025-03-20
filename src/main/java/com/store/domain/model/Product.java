@@ -2,7 +2,7 @@ package com.store.domain.model;
 
 import lombok.Data;
 
-@Data
+@Data //setters y getters
 public class Product {
     private String name;
     private int minimumStockLevel;
