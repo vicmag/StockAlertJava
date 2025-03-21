@@ -13,8 +13,9 @@ class ProductServiceTest {
     void whenSetMinimumStockLevel_thenLevelIsSaved() {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
-        ProductService productService = new ProductService(productRepository);
-        Product product = new Product("Camiseta Azul");
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository,alertNotifier);
+        Product product = new Product("Camiseta Azul",0);
         int newMinimumStockLevel = 15;
 
         // Act
@@ -29,8 +30,9 @@ class ProductServiceTest {
     void whenSetMinimumStockLevel_equalToZero_thenErrorMessage() {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
-        ProductService productService = new ProductService(productRepository);
-        Product product = new Product("Camiseta Azul");
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository,alertNotifier);
+        Product product = new Product("Camiseta Azul",0);
         int invalidMinimumStockLevel = 0;
 
         // Act & Assert 
@@ -51,7 +53,7 @@ class ProductServiceTest {
 
         ProductService productService = new ProductService(productRepository, alertNotifier);
 
-        Product product = new Product("Camiseta Azul");
+        Product product = new Product("Camiseta Azul",10);
         product.setStock(100); //Esto es lo tengo en mi inventario
         int newMinimumStockLevel = 10;
         product.setMinimumStockLevel(newMinimumStockLevel);

@@ -8,8 +8,9 @@ public class Product {
     private int stock;
     private int minimumStockLevel;
 
-    public Product(String name){
+    public Product(String name, int stock){
         this.name = name;
+        this.stock = stock;
     }
     
 }
