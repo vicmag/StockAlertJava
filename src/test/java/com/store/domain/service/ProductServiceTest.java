@@ -13,7 +13,8 @@ class ProductServiceTest {
     void whenSetMinimumStockLevel_thenLevelIsSaved() {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
-        ProductService productService = new ProductService(productRepository);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository,alertNotifier);
         Product product = new Product("Camiseta Azul");
         int newMinimumStockLevel = 15;
 
@@ -29,7 +30,8 @@ class ProductServiceTest {
     void whenSetMinimumStockLevel_equaltozero_thenError() {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
-        ProductService productService = new ProductService(productRepository);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository,alertNotifier);
         Product product = new Product("Camiseta Azul");
         int invalidMinimumStockLevel = 0;
 
