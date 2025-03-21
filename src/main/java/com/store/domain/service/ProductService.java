@@ -33,7 +33,9 @@ public class ProductService {
     }
 
     public void checkStockLevel(Product product){
-        //Impletación vacia en la Fase Roja
+        if (product.getStock() <= product.getMinimumStockLevel()){
+            alertNotifier.notifyLowStock(product);
+        }
 
     }
     
