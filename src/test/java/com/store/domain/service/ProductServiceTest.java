@@ -1,8 +1,11 @@
 package com.store.domain.service;
 
 import com.store.domain.model.Product;
+import com.store.domain.port.ProductRepository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,8 +24,7 @@ public class ProductServiceTest {
 
         //Assert
         verify(productRepository).save(product);
-        assertEquals(newMinimumStockLevel, product.getMinumStockLevel());
-
+        assertEquals(newMinimumStockLevel, product.getMinimumStockLevel());
     }
     
 }
