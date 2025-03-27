@@ -12,6 +12,12 @@ public class ProductService {
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
         //Implementación
+        
+        //Validación del stock mínimo
+        if (minimumStockLevel < 0){
+            throw new IllegalArgumentException("El valor es negativo");
+        }
+
         product.setMinimumStockLevel(minimumStockLevel);
 
         //Almaceno en BD
