@@ -22,9 +22,9 @@ public class ProductServiceTest {
         // Act
         productService.setMinimumStockLevel(product, newMinimumStockLevel);
 
-        // Assert        
-        verify(productRepository).save(product);
+        // Assert
         assertEquals(newMinimumStockLevel, product.getMinimumStockLevel());
-
+        verify(productRepository).save(product);
+        
     }
 }
