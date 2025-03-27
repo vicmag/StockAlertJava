@@ -10,19 +10,22 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public void setMinimumStockLevel(Product product, int minimumStockLevel){
-        //Implementación
+    public void setMinimumStockLevel(Product product, int minimumStockLevel){    
         
         //Validación del stock mínimo
-        if (minimumStockLevel < 0){
-            throw new IllegalArgumentException("El valor es negativo");
-        }
+        validateMinimumStockLevel(minimumStockLevel);
 
         product.setMinimumStockLevel(minimumStockLevel);
 
         //Almaceno en BD
         productRepository.save(product);
 
+    }
+
+    private void validateMinimumStockLevel(int minimumStockLevel){
+        if (minimumStockLevel < 0){
+            throw new IllegalArgumentException("El valor es negativo");
+        }
     }
 
 }
