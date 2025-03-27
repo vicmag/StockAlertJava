@@ -11,6 +11,11 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
+        
+        if (minimumStockLevel < 0){
+            throw new IllegalArgumentException("El valor es negativo.");
+        }
+
         //Establece el valor de stock minimo
         product.setMinimumStockLevel(minimumStockLevel);
 
