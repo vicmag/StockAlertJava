@@ -23,7 +23,7 @@ public class ProductService {
     }
 
     private void validateMinimumStockLevel(int minimumStockLevel){
-        if (minimumStockLevel < 0){
+        if (minimumStockLevel <= 0){
             throw new IllegalArgumentException("El valor es negativo.");
         }
     }
