@@ -11,7 +11,11 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
-        //Implementación pendiente Fase Roja
+        //Establece el valor de stock minimo
+        product.setMinimumStockLevel(minimumStockLevel);
+
+        //Guardado del producto
+        productRepository.save(product);
     }
 
     
