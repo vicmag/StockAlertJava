@@ -23,7 +23,10 @@ public class ProductService {
     }
 
     public void saveProduct(Product product) {
-        productRepository.save(product); // Bug: No valida stock negativo
+        if (product.getStock() < 0) {
+            throw new IllegalArgumentException("El stock no debe ser negativo.");
+        }
+        productRepository.save(product); 
     }
 
     private void validateMinimumStockLevel(int minimumStockLevel){
