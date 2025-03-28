@@ -29,6 +29,9 @@ public class ProductService {
     }
 
     public void saveProduct(Product product){
+        if (product.getStock() < 0){
+            throw new IllegalArgumentException("El stock no debe ser negativo");
+        }
         productRepository.save(product);
     }
 
