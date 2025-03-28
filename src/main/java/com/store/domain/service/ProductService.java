@@ -35,4 +35,16 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    public void updateProduct(Product product){
+        
+        int registrosModificados = productRepository.update(product);
+
+        if (registrosModificados == 0){
+            throw new IllegalArgumentException("No existe el producto");
+        }
+        
+    }
+
+
+
 }

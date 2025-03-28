@@ -4,5 +4,6 @@ import com.store.domain.model.Product;
 
 public interface ProductRepository {
     void save(Product product);
+    int update(Product product);
 
 }

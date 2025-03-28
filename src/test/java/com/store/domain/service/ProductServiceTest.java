@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -70,8 +71,8 @@ public class ProductServiceTest {
     @Test
     void whenSaveProductWithNegativeStock_thenThrowException() {
         // Arrange (Configuración)
-        ProductRepository mockRepository = Mockito.mock(ProductRepository.class);
-        ProductService productService = new ProductService(mockRepository);
+        ProductRepository productRepository = Mockito.mock(ProductRepository.class);
+        ProductService productService = new ProductService(productRepository);
         Product invalidProduct = new Product("Camiseta", -10); // Stock negativo
 
         // Act & Assert (Ejecutar y Verificar)
@@ -80,6 +81,25 @@ public class ProductServiceTest {
         });
 
         // Verificar que NO se llamó a save (opcional)
-        verify(mockRepository, never()).save(any());
+        verify(productRepository, never()).save(any(Product.class));
+
+    }
+
+    @Test
+    void whenUpdateNonExistingProduct_thenThrowException() {
+        // Arrange (Configuración)
+        ProductRepository productRepository = Mockito.mock(ProductRepository.class);
+        ProductService productService = new ProductService(productRepository);
+        Product invalidProduct = new Product("Camiseta", 10); // Stock negativo
+
+        //simulo que el método update de productRepository me regresa un cero
+        when(productRepository.update(any(Product.class))).thenReturn(0);
+
+        // Act & Assert (Ejecutar y Verificar)
+        assertThrows(IllegalArgumentException.class, () -> {
+            productService.updateProduct(invalidProduct); // Debe lanzar excepción
+        });
+
+
     }
 }
