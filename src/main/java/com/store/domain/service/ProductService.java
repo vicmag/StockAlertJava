@@ -19,7 +19,11 @@ public class ProductService {
         product.setMinimumStockLevel(minimumStockLevel);
 
         //Guardado del producto
-        productRepository.save(product);
+        saveProduct(product);
+    }
+
+    public void saveProduct(Product product) {
+        productRepository.save(product); // Bug: No valida stock negativo
     }
 
     private void validateMinimumStockLevel(int minimumStockLevel){
