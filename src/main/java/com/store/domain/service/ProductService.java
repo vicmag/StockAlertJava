@@ -18,14 +18,18 @@ public class ProductService {
         product.setMinimumStockLevel(minimumStockLevel);
 
         //Almaceno en BD
-        productRepository.save(product);
+        saveProduct(product);
 
-    }
+    }    
 
     private void validateMinimumStockLevel(int minimumStockLevel){
         if (minimumStockLevel <= 0){
             throw new IllegalArgumentException("El valor es negativo");
         }
+    }
+
+    public void saveProduct(Product product){
+        productRepository.save(product);
     }
 
 }

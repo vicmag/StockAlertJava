@@ -2,11 +2,13 @@ package com.store.domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import com.store.domain.port.ProductRepository; 
 import com.store.domain.model.Product;
@@ -18,7 +20,7 @@ public class ProductServiceTest {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
         ProductService productService = new ProductService(productRepository);
-        Product product = new Product("Camiseta Azul");
+        Product product = new Product("Camiseta Azul", 100);
         int newMinimumStockLevel = 15;
 
         // Act
@@ -35,7 +37,7 @@ public class ProductServiceTest {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
         ProductService productService = new ProductService(productRepository);
-        Product product = new Product("Camiseta Azul");
+        Product product = new Product("Camiseta Azul", 100);
         int invalidMinimumStockLevel = -1;
 
         // Act & Assert
@@ -52,7 +54,7 @@ public class ProductServiceTest {
         // Arrange
         ProductRepository productRepository = mock(ProductRepository.class);
         ProductService productService = new ProductService(productRepository);
-        Product product = new Product("Camiseta Azul");
+        Product product = new Product("Camiseta Azul", 100);
         int invalidMinimumStockLevel = 0;
 
         // Act & Assert
@@ -62,5 +64,22 @@ public class ProductServiceTest {
         );
         verify(productRepository, never()).save(product);
         
+    }
+
+    // ProductServiceTest.java
+    @Test
+    void whenSaveProductWithNegativeStock_thenThrowException() {
+        // Arrange (Configuración)
+        ProductRepository mockRepository = Mockito.mock(ProductRepository.class);
+        ProductService productService = new ProductService(mockRepository);
+        Product invalidProduct = new Product("Camiseta", -10); // Stock negativo
+
+        // Act & Assert (Ejecutar y Verificar)
+        assertThrows(IllegalArgumentException.class, () -> {
+            productService.saveProduct(invalidProduct); // Debe lanzar excepción
+        });
+
+        // Verificar que NO se llamó a save (opcional)
+        verify(mockRepository, never()).save(any());
     }
 }
