@@ -1,24 +1,20 @@
 package com.store.domain.service;
 
-import static org.mockito.Mockito.mock;
-
-import com.store.domain.port.ProductRepository; 
-import com.store.domain.model.Product;
-
 public class ProductServiceTest {
-    void whenSetMinimumStockLevel_thenLevelIsSaved(){
-        // Arrange
+
+    void whenSetMinimuStockLevel_LevelIsSaved(){
+        //Arrage
         ProductRepository productRepository = mock(ProductRepository.class);
         ProductService productService = new ProductService(productRepository);
         Product product = new Product("Camiseta Azul");
-        int newMinimumStockLevel = 15;
+        int minimumStockLevel = 15;
 
-        // Act
-        productService.setMinimumStockLevet(product, newMinimumStockLevel);
+        //Act
+        productService.setMinimumStockLevel(product, minimumStockLevel);
 
-        // Assert        
+        //Assert
         verify(productRepository).save(product);
-        assertEquals(newMinimumStockLevel, product.getMinimumStockLevel());
-
+        assertEquals(minimumStockLevel, product.getMinimumStockLevel());    
     }
+    
 }
