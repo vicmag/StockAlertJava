@@ -10,13 +10,20 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public void saveProduct(Product product) {    
+        if (product.getStock() < 0){
+            throw new IllegalArgumentException("El stock no debe ser negativo.");
+        }    
+        productRepository.save(product);
+    }
+
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
         
         validateMinimumStockLevel(minimumStockLevel);
         
         product.setMinimumStockLevel(minimumStockLevel);
 
-        productRepository.save(product);
+        saveProduct(product);
         
     }
 
