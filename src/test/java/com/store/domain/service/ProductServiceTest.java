@@ -3,11 +3,14 @@ package com.store.domain.service;
 import com.store.domain.port.ProductRepository;
 import com.store.domain.model.Product;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -61,6 +64,23 @@ public class ProductServiceTest {
         
         verify(productRepository, never()).save(product);
         
+    }
+
+    // ProductServiceTest.java
+    @Test
+    void whenSaveProductWithNegativeStock_thenThrowException() {
+        // Assert(Configuración)
+        ProductRepository productRepository = Mockito.mock(ProductRepository.class);
+        ProductService productService = new ProductService(productRepository);
+        Product invalidProduct = new Product("Camiseta", -10); // Stock negativo
+
+        // Act & Assert (Ejecutar y Verificar)
+        assertThrows(IllegalArgumentException.class, () -> {
+            productService.saveProduct(invalidProduct); // Debe lanzar excepción
+        });
+
+        // Verificar que NO se llamó a save (opcional)
+        verify(productRepository, never()).save(any());
     }
     
 }

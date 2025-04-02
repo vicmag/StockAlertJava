@@ -10,6 +10,21 @@ public class ProductService {
        this.productRepository = productRepository; 
     }
 
+    public void saveProduct(Product product){
+
+        //Validación de producto
+        validateProduct(product);
+
+        //Se almacena el valor en BD
+        productRepository.save(product);
+    }
+
+    private void validateProduct(Product product){
+        if (product.getStock() < 0){
+            throw new IllegalArgumentException("El valor debe ser positivo.");
+        }
+    }
+
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
 
         validateMiminumStockLeven(minimumStockLevel);
@@ -17,10 +32,9 @@ public class ProductService {
         //Se guarda el valor en el modelo
         product.setMinimumStockLevel(minimumStockLevel);
         
-        //Se almacena el valor en BD
-        productRepository.save(product);
+        saveProduct(product);
         
-    }
+    }    
 
     private void validateMiminumStockLeven(int minimumStockLevel){
         if (minimumStockLevel <= 0){
