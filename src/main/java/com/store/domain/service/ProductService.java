@@ -11,7 +11,10 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
+        //Se guarda el valor en el modelo
         product.setMinimumStockLevel(minimumStockLevel);
+        
+        //Se almacena el valor en BD
         productRepository.save(product);
     }
 
