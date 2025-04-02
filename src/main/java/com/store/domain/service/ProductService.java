@@ -11,7 +11,9 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
-        //No tiene funcionalidad. Fase Roja
+        product.setMinimumStockLevel(minimumStockLevel);
+
+        productRepository.save(product);
     }
 
 }
