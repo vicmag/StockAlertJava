@@ -45,5 +45,22 @@ public class ProductServiceTest {
         verify(productRepository, never()).save(product);
         
     }
+
+    @Test
+    void whenSetMinimuStockLevelWithZeroValue_thenThrowException(){
+        //Arrage
+        ProductRepository productRepository = mock(ProductRepository.class);
+        ProductService productService = new ProductService(productRepository);
+        Product product = new Product("Camiseta Azul");
+        int invalidMinimumStockLevel = 0;
+        
+        //Act & Assert
+        assertThrows(
+            IllegalArgumentException.class, 
+            () -> productService.setMinimumStockLevel(product, invalidMinimumStockLevel));
+        
+        verify(productRepository, never()).save(product);
+        
+    }
     
 }
