@@ -12,9 +12,7 @@ public class ProductService {
 
     public void setMinimumStockLevel(Product product, int minimumStockLevel){
 
-        if (minimumStockLevel < 0){
-            throw new IllegalArgumentException("El valor debe ser positivo.");
-        }
+        validateMiminumStockLeven(minimumStockLevel);
 
         //Se guarda el valor en el modelo
         product.setMinimumStockLevel(minimumStockLevel);
@@ -22,5 +20,11 @@ public class ProductService {
         //Se almacena el valor en BD
         productRepository.save(product);
         
+    }
+
+    private void validateMiminumStockLeven(int minimumStockLevel){
+        if (minimumStockLevel < 0){
+            throw new IllegalArgumentException("El valor debe ser positivo.");
+        }
     }
 }
