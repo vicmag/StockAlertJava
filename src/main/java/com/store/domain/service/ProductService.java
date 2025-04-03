@@ -33,4 +33,17 @@ public class ProductService {
         }
     }
 
+    void incrementStock(String productName, int increment){
+        Product product = productRepository.findByName(productName);
+
+        if (product == null){
+            throw new IllegalArgumentException("Producto no encontrado");
+        }
+
+        product.setStock(product.getStock()+increment);
+
+        productRepository.save(product);
+        
+    }
+
 }
