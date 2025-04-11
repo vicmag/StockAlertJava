@@ -11,20 +11,30 @@ public class ProductService {
     }
 
     public void increaseStock(String productName, int amount) {
-        // Validación básica
+        validateIncrementAmount(amount);
+        Product product = getProductByName(productName);
+        updateProductStock(product, amount);
+    }
+    
+    private void validateIncrementAmount(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("El incremento debe ser un valor positivo");
         }
-
-        // Obtener producto existente
-        Product product = productRepository.findByName(productName);
+    }
+    
+    private Product getProductByName(String name) {
+        Product product = productRepository.findByName(name);
         
-        // Incrementar stock
-        int newStock = product.getStock() + amount;
-        product.setStock(newStock);
-        
-        // Guardar cambios
+        return product;
+    }
+    
+    private void updateProductStock(Product product, int increment) {
+        product.setStock(calculateNewStock(product.getStock(), increment));
         productRepository.save(product);
+    }
+    
+    private int calculateNewStock(int currentStock, int increment) {
+        return currentStock + increment;
     }
 
 }
