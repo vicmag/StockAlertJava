@@ -12,6 +12,10 @@ public class ProductService {
 
     public void setMinimumStockLevel(Product product, int minimuStockLevel){
         product.setMinimumStockLevel(minimuStockLevel);
+        saveProduct(product);
+    }
+
+    private void saveProduct(Product product){
         productRepository.save(product);
     }
 
