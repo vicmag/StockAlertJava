@@ -23,8 +23,8 @@ public class ProductServiceTest {
         productService.setMinimumStockLevel(product, newMinimumStockLevel);
 
         //Assert (validación)
-        verify(productRepository).save(product);
         assertEquals(newMinimumStockLevel, product.getMinimumStockLevel());
+        verify(productRepository).save(product);        
 
     }
 }

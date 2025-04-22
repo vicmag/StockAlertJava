@@ -10,8 +10,9 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public void setMinimumStockLevel(Product product, int minimuStockLever){
-        //Implementación pendiente. Fase Roja
+    public void setMinimumStockLevel(Product product, int minimuStockLevel){
+        product.setMinimumStockLevel(minimuStockLevel);
+        productRepository.save(product);
     }
 
 }
