@@ -5,12 +5,9 @@ import lombok.Data;
 @Data
 public class Product {
     String name;
-    int stock;
     int minimumStockLevel;
 
-    public Product(String name, int stock){
+    public Product(String name){
         this.name = name;
-        this.stock = stock;
     }
-
 }
