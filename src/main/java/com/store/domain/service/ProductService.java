@@ -11,6 +11,9 @@ public class ProductService {
     }
 
     public void setMinimumStockLevel(Product product, int minimuStockLevel){
+        if (minimuStockLevel < 0){
+            throw new IllegalArgumentException("El umbral debe ser positivo.");
+        }
         product.setMinimumStockLevel(minimuStockLevel);
         saveProduct(product);
     }
