@@ -35,6 +35,8 @@ public class ProductService {
     }
 
     public void checkStockLevel(Product product){
-        //Implementación pendiente. Fase Roja
+        if (product.getStock() < product.getMinimumStockLevel()){
+            alertNotifier.notifyLowStock(product);
+        } 
     }
 }

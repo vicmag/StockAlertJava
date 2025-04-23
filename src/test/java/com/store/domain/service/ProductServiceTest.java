@@ -82,6 +82,5 @@ public class ProductServiceTest {
 
         //Assert
         verify(alertNotifier).notifyLowStock(product);
-
     }
 }
