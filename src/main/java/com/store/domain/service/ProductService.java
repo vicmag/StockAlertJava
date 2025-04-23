@@ -1,13 +1,21 @@
 package com.store.domain.service;
 
+import com.store.domain.port.AlertNotifier;
 import com.store.domain.port.ProductRepository;
 import com.store.domain.model.Product;
 
 public class ProductService {
     private final ProductRepository productRepository;
+    private final AlertNotifier alertNotifier;
 
     public ProductService(ProductRepository productRepository){
         this.productRepository = productRepository;
+        this.alertNotifier = null;
+    }
+
+    public ProductService(ProductRepository productRepository, AlertNotifier alertNotifier){
+        this.productRepository = productRepository;
+        this.alertNotifier = alertNotifier;
     }
 
     public void setMinimumStockLevel(Product product, int minimuStockLevel){
@@ -26,4 +34,7 @@ public class ProductService {
         }
     }
 
+    public void checkStockLevel(Product product){
+        //Implementación pendiente. Fase Roja
+    }
 }

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.store.domain.model.Product;
 import com.store.domain.port.ProductRepository;
+import com.store.domain.port.AlertNotifier;
 
 public class ProductServiceTest {
     @Test
@@ -61,6 +62,26 @@ public class ProductServiceTest {
             () -> productService.setMinimumStockLevel(product, invalidMinimumStockLevel)
             );
         verify(productRepository, never()).save(product);
+
+    }
+
+    @Test
+    void cuandoInventarioEstaDebajoDelUmbral_entoncesLanzoUnaAlerta(){
+        //Arrange
+        ProductRepository productRepository = mock(ProductRepository.class);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository, alertNotifier);
+        Product product = new Product("Camiseta Azul");
+        product.setStock(20);
+        int minimumStockLevel = 10;
+        productService.setMinimumStockLevel(product, minimumStockLevel);
+
+        //Act
+        product.setStock(5);
+        productService.checkStockLevel(product);
+
+        //Assert
+        verify(alertNotifier).notifyLowStock(product);
 
     }
 }
