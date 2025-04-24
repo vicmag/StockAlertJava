@@ -89,6 +89,8 @@ public class ProductServiceTest {
     }
 
     @Test
+    //El sistema debe permitir incrementar el stock de un producto existente
+    //Happy path
     void cuadoIncrementoElInventario_entoncesElValorActualizadoSeAlmacena(){
         //Arrange
         int initialStock = 10;
@@ -112,4 +114,33 @@ public class ProductServiceTest {
         verify(productRepository).save(product);
 
     }
+
+    @Test
+    //El sistema debe permitir incrementar el stock de un producto existente
+    //Flujo de excepción
+    void cuadoIncrementoElInventario_yElProductoNoSeEncuentra_entoncesSeLanzaExcepcion(){
+        //Arrange
+        int initialStock = 10;
+        int increment = 5;
+        String productName = "Camiseta Azul";
+        Product product = new Product(productName);
+        product.setStock(initialStock);
+
+        ProductRepository productRepository = mock(ProductRepository.class);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository, alertNotifier);
+        
+        when(productRepository.findByName(productName)).thenReturn(null);
+        
+        //Act & Assert
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> productService.incrementStock(productName, increment));
+
+        
+        verify(productRepository).findByName(productName);
+        verify(productRepository, never()).save(product);
+    }
+
+
 }
