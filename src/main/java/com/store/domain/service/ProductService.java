@@ -35,7 +35,8 @@ public class ProductService {
         } 
     }
 
-    public void incrementStock(Product product, int increment){
-        //Sin implementación. Fase Roja
+    public void incrementStock(String productName, int increment){
+        
+        
     }
 }

@@ -104,7 +104,7 @@ public class ProductServiceTest {
         when(productRepository.findByName(productName)).thenReturn(product);                
         
         //Act
-        productService.incrementStock(product, increment);
+        productService.incrementStock(productName, increment);
 
         //Assert
         assertEquals(initialStock + increment, product.getStock());
