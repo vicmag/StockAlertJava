@@ -101,7 +101,7 @@ public class ProductServiceTest {
         AlertNotifier alertNotifier = mock(AlertNotifier.class);
         ProductService productService = new ProductService(productRepository, alertNotifier);
         
-        when(productRepository.findByName(productName)).thenReturn(product);                
+        when(productRepository.findByName(productName)).thenReturn(product);
         
         //Act
         productService.incrementStock(productName, increment);

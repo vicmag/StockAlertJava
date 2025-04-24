@@ -36,7 +36,8 @@ public class ProductService {
     }
 
     public void incrementStock(String productName, int increment){
-        
-        
+        Product product = productRepository.findByName(productName);
+        product.setStock(product.getStock() + increment);
+        productRepository.save(product);        
     }
 }
