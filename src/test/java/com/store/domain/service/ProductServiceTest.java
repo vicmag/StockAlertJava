@@ -133,11 +133,11 @@ public class ProductServiceTest {
         when(productRepository.findByName(productName)).thenReturn(null);
         
         //Act & Assert
-        assertThrows(
+        IllegalArgumentException exception = assertThrows(
             IllegalArgumentException.class,
             () -> productService.incrementStock(productName, increment));
 
-        
+        assertEquals("El producto no existe.", exception.getMessage());
         verify(productRepository).findByName(productName);
         verify(productRepository, never()).save(product);
     }
