@@ -4,5 +4,6 @@ import com.store.domain.model.Product;
 
 public interface ProductRepository {
     void save(Product product);
+    Product findByName(String productName);
 
 }

@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,8 @@ public class ProductServiceTest {
     void whenSetMinimumStockLevel_thenLevelIsSaved(){
         //Arrange (configuración)
         ProductRepository productRepository = mock(ProductRepository.class);
-        ProductService productService = new ProductService(productRepository);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository, alertNotifier);
         Product product = new Product("Camiseta Azul");
         int newMinimumStockLevel = 15;
 
@@ -35,7 +37,8 @@ public class ProductServiceTest {
     void cuandoUmbralMinimoEsInvalido_entoncesSeLanzaExcepcion(){
         //Arrange (configuración)
         ProductRepository productRepository = mock(ProductRepository.class);
-        ProductService productService = new ProductService(productRepository);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository, alertNotifier);
         Product product = new Product("Camiseta Azul");
         int invalidMinimumStockLevel = -1;
 
@@ -52,7 +55,8 @@ public class ProductServiceTest {
     void cuandoUmbralMinimoEsCero_entoncesSeLanzaExcepcion(){
         //Arrange (configuración)
         ProductRepository productRepository = mock(ProductRepository.class);
-        ProductService productService = new ProductService(productRepository);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository, alertNotifier);
         Product product = new Product("Camiseta Azul");
         int invalidMinimumStockLevel = 0;
 
@@ -82,5 +86,30 @@ public class ProductServiceTest {
 
         //Assert
         verify(alertNotifier).notifyLowStock(product);
+    }
+
+    @Test
+    void cuadoIncrementoElInventario_entoncesElValorActualizadoSeAlmacena(){
+        //Arrange
+        int initialStock = 10;
+        int increment = 5;
+        String productName = "Camiseta Azul";
+        Product product = new Product(productName);
+        product.setStock(initialStock);
+
+        ProductRepository productRepository = mock(ProductRepository.class);
+        AlertNotifier alertNotifier = mock(AlertNotifier.class);
+        ProductService productService = new ProductService(productRepository, alertNotifier);
+        
+        when(productRepository.findByName(productName)).thenReturn(product);                
+        
+        //Act
+        productService.incrementStock(product, increment);
+
+        //Assert
+        assertEquals(initialStock + increment, product.getStock());
+        verify(productRepository).findByName(productName);
+        verify(productRepository).save(product);
+
     }
 }

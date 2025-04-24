@@ -8,11 +8,6 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final AlertNotifier alertNotifier;
 
-    public ProductService(ProductRepository productRepository){
-        this.productRepository = productRepository;
-        this.alertNotifier = null;
-    }
-
     public ProductService(ProductRepository productRepository, AlertNotifier alertNotifier){
         this.productRepository = productRepository;
         this.alertNotifier = alertNotifier;
@@ -38,5 +33,9 @@ public class ProductService {
         if (product.getStock() < product.getMinimumStockLevel()){
             alertNotifier.notifyLowStock(product);
         } 
+    }
+
+    public void incrementStock(Product product, int increment){
+        //Sin implementación. Fase Roja
     }
 }
