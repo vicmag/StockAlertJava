@@ -2,3 +2,6 @@
 /workspaces/tdd_java/src/main/java/com/store/domain/port/ProductRepository.java
 /workspaces/tdd_java/src/main/java/com/store/domain/port/AlertNotifier.java
 /workspaces/tdd_java/src/main/java/com/store/domain/model/Product.java
+/workspaces/tdd_java/src/main/java/com/store/domain/service/AlertService.java
+/workspaces/tdd_java/src/main/java/com/store/domain/model/Alert.java
+/workspaces/tdd_java/src/main/java/com/store/domain/port/AlertHistoryRepository.java

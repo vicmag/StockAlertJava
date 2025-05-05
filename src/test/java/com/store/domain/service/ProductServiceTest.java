@@ -3,16 +3,24 @@ package com.store.domain.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import com.store.domain.model.Alert; // Ensure this import matches the package where Alert is defined
+import com.store.domain.port.AlertHistoryRepository; // Ensure this matches the package where AlertHistoryRepository is defined
 
 import org.junit.jupiter.api.Test;
 
 import com.store.domain.model.Product;
 import com.store.domain.port.ProductRepository;
 import com.store.domain.port.AlertNotifier;
+import java.util.Arrays;
 
 public class ProductServiceTest {
     @Test
@@ -103,7 +111,7 @@ public class ProductServiceTest {
         AlertNotifier alertNotifier = mock(AlertNotifier.class);
         ProductService productService = new ProductService(productRepository, alertNotifier);
         
-        when(productRepository.findByName(productName)).thenReturn(product);
+        when(productRepository.findByName(any())).thenReturn(product);
         
         //Act
         productService.incrementStock(productName, increment);
@@ -130,7 +138,10 @@ public class ProductServiceTest {
         AlertNotifier alertNotifier = mock(AlertNotifier.class);
         ProductService productService = new ProductService(productRepository, alertNotifier);
         
-        when(productRepository.findByName(productName)).thenReturn(null);
+        //when(productRepository.findByName(productName)).thenReturn(null);
+
+        doReturn(null).when(productRepository).findByName(any());
+        
         
         //Act & Assert
         IllegalArgumentException exception = assertThrows(
@@ -142,5 +153,34 @@ public class ProductServiceTest {
         verify(productRepository, never()).save(product);
     }
 
+    @Test
+    // Escenario 3: Historial de Alertas
+    // Dado: Alertas generadas para varios productos
+    // Cuando: Administrador accede al historial
+    // Entonces: El sistema muestra lista con fecha, producto y nivel de stock
+    void cuandoConsultoHistorialAlertas_entoncesMuestraRegistrosCompletos() {
+        // Arrange
+        AlertHistoryRepository alertRepo = mock(AlertHistoryRepository.class);
+        Product camiseta = new Product("Camiseta Azul");
+        Product zapatos = new Product("Zapatos Deportivos");
+        
+        // Configurar mock para devolver alertas de ejemplo
+        List<Alert> mockAlerts = Arrays.asList(
+            new Alert(camiseta, 5, 10, LocalDateTime.now().minusDays(1)),
+            new Alert(zapatos, 3, 8, LocalDateTime.now())
+        );
+        when(alertRepo.findAll()).thenReturn(mockAlerts);
+
+        AlertService alertService = new AlertService(alertRepo);
+
+        // Act
+        List<Alert> historial = alertService.getAlertHistory();
+
+        // Assert
+        assertEquals(2, historial.size());
+        assertEquals("Camiseta Azul", historial.get(0).getProductName());
+        assertEquals(5, historial.get(0).getCurrentStock());
+        verify(alertRepo).findAll();
+    }
 
 }
