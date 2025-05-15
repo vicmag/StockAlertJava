@@ -1,6 +1,15 @@
 package com.store.domain.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.Test;
+import com.store.domain.port.ProductRepository;
+import com.store.domain.model.Product;
+
+
 
 public class ProductServiceTest {
     @Test    
@@ -21,18 +30,18 @@ public class ProductServiceTest {
 
         // 4. Comportamiento del mock
         when(productRepository.findByName(productName)).thenReturn(product);
-        when(productRepository.save(product)).thenReturn(invocation -> ivoncation.getArgument(0));
+        when(productRepository.save(product)).thenAnswer(invocation -> invocation.getArgument(0));
+        // Equivalente a la línea de arriba - when(productRepository.save(product)).thenReturn(product);
 
         
         // Act (Ejecución)
         productService.increaseStock(productName, increment);
 
         
-        //Assert (Validación)
+        // Assert (Validación)
         verify(productRepository).findByName(productName);
         verify(productRepository).save(product);
         assertEquals(initialStock + increment, product.getStock());
-
 
     }
 }
