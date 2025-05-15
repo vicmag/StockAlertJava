@@ -12,14 +12,22 @@ public class ProductService {
 
     public void increaseStock(String productName, int increment){
         // 1. Buscar el producto
-        Product product = productRepository.findByName(productName);
+        Product product = findProductByName(productName);
 
         // 2. Incrementar el stock
         product.setStock(product.getStock() + increment);
 
         // 3. Guardar el producto
-        productRepository.save(product);
+        saveProduct(product);
 
+    }
+
+    private Product findProductByName(String productName) {
+        return productRepository.findByName(productName);
+    }
+
+    private void saveProduct(Product product) {
+        productRepository.save(product);
     }
 
 }
