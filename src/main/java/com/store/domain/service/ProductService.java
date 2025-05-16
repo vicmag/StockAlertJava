@@ -23,7 +23,11 @@ public class ProductService {
     }
 
     private Product findProductByName(String productName) {
-        return productRepository.findByName(productName);
+        Product product = productRepository.findByName(productName); 
+        if (product == null) {
+            throw new IllegalArgumentException("Producto inexistente");
+        }
+        return product;
     }
 
     private void saveProduct(Product product) {
